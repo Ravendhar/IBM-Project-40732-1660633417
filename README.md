@@ -14,4 +14,4 @@ Team ID : **PNT2022TMID21208**
 
 * Ideation Phase - done
 * Problem Statement - done
-* Project Design & Planning - done
+* Project Design & Planning (1) - done
