@@ -1,7 +1,7 @@
-Assignment 1 and 2 done by
+Assignment 1, 2 done by
 
-917719C008
-917719C054
-917719C062
+917719C008,
+917719C054,
+917719C062,
 917719C089
 
