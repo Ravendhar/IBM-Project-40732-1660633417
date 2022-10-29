@@ -1,13 +1,19 @@
 from distutils.log import debug
+from sendgridmail import sendmail
 from flask import Flask, render_template, request, redirect, url_for, session
 import ibm_db
 import re
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 app = Flask(__name__)
   
 app.secret_key = 'a'
 
-conn=ibm_db.connect("DATABASE=bludb;HOSTNAME=9938aec0-8105-433e-8bf9-0fbb7e483086.c1ogj3sd0tgtu0lqde00.databases.appdomain.cloud;PORT=32459;Security=SSL;SSLServerCertificate=DigiCertGlobalRootCA.crt;UID=ygg09863;PWD=dQXLECjtaCqXsJUt;","","")
+conn=ibm_db.connect(os.getenv('DB_KEY'),"","")
 
 @app.route('/')    
 @app.route('/login')
@@ -36,7 +42,7 @@ def loginpage():
             userid=  account['USERNAME']
             session['username'] = account['USERNAME']
             msg = 'Logged in successfully !'
-            
+            sendmail(account['EMAIL'],'Plasma donor App login','You are successfully logged in!')
             return redirect(url_for('dash'))
         else:
             msg = 'Incorrect username / password !'
@@ -82,6 +88,8 @@ def register():
 
             ibm_db.execute(prep_stmt)
             msg = 'You have successfully registered !'
+            sendmail(email,'Plasma donor App Registration','You are successfully Registered {}!'.format(username))
+
     elif request.method == 'POST':
         msg = 'Please fill out the form !'
     return render_template('register.html', msg = msg)
@@ -122,6 +130,7 @@ def requested():
     ibm_db.bind_param(prep_stmt, 4, email)
     ibm_db.bind_param(prep_stmt, 5, phone)
     ibm_db.execute(prep_stmt)
+    sendmail(email,'Plasma donor App plasma request','Your request for plasma is recieved.')
     return render_template('request.html', pred="Your request is sent to the concerned people.")
 
 
