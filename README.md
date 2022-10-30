@@ -17,3 +17,5 @@ Team ID : **PNT2022TMID21208**
 * Project Design & Planning (1) - done
 * Project Design & Planning (2) - done
 * Project planning - done
+* Sprint 1 - done
+
